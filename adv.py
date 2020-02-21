@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from world import World
+from util import Graph
 
 import random
 from ast import literal_eval
@@ -36,49 +37,76 @@ traversal_path = []
 
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
+
+# n = 1
+# s = 2
+# w = 3
+# e = 4
+#
+# graph = Graph()
+# def find_route(current_room_exits, player):
+#     # graph = Graph()
+#     for exit in current_room_exits:
+#         print('exit:', exit)
+#         # graph.add_vertex(exit)
+#         # graph.add_vertex(exit[1])
+#         # graph.add_vertex(exit[2])
+#         # graph.add_vertex(exit[3])
+#     print('graph.vertices:', graph.vertices)
+#
+#
+#
+# find_route(current_room_exits, player)
+# print('graph.vertices:', graph.vertices)
+#
+
+
+
+
+
 def recurse():
-    while True:
-        current_room_exits = player.current_room.get_exits()
-        for direction in current_room_exits:
-            print('direction:', direction)
-            if direction == 'n':
-                print('n:')
-                player.travel(direction)
-                current_room_id = player.current_room.id
-                print('current_room_id', current_room_id)
-                current_room_exits = player.current_room.get_exits()
-                print('current_room_exits', current_room_exits)
-                traversal_path.append(direction)
-                print('traversal_path:', traversal_path)
-                recurse()
-            if direction == 's':
-                print('s:')
-                player.travel(direction)
-                current_room_id = player.current_room.id
-                print('current_room_id', current_room_id)
-                current_room_exits = player.current_room.get_exits()
-                print('current_room_exits', current_room_exits)
-                traversal_path.append(direction)
-                recurse()
-            if direction == 'e':
-                player.travel(direction)
-                current_room_id = player.current_room.id
-                print('current_room_id', current_room_id)
-                current_room_exits = player.current_room.get_exits()
-                print('current_room_exits', current_room_exits)
-                print('e:')
-                traversal_path.append(direction)
-                recurse()
-            if direction == 'w':
-                print('w:')
-                player.travel(direction)
-                current_room_id = player.current_room.id
-                print('current_room_id', current_room_id)
-                current_room_exits = player.current_room.get_exits()
-                print('current_room_exits', current_room_exits)
+    # while True:
+    current_room_exits = player.current_room.get_exits()
+    for direction in current_room_exits:
+        print('direction:', direction)
+        if direction == 'n':
+            print('n:')
+            player.travel(direction)
+            current_room_id = player.current_room.id
+            print('current_room_id', current_room_id)
+            current_room_exits = player.current_room.get_exits()
+            print('current_room_exits', current_room_exits)
+            traversal_path.append(direction)
+            print('traversal_path:', traversal_path)
+            recurse()
+        if direction == 's':
+            print('s:')
+            player.travel(direction)
+            current_room_id = player.current_room.id
+            print('current_room_id', current_room_id)
+            current_room_exits = player.current_room.get_exits()
+            print('current_room_exits', current_room_exits)
+            traversal_path.append(direction)
+            recurse()
+        if direction == 'e':
+            player.travel(direction)
+            current_room_id = player.current_room.id
+            print('current_room_id', current_room_id)
+            current_room_exits = player.current_room.get_exits()
+            print('current_room_exits', current_room_exits)
+            print('e:')
+            traversal_path.append(direction)
+            recurse()
+        if direction == 'w':
+            print('w:')
+            player.travel(direction)
+            current_room_id = player.current_room.id
+            print('current_room_id', current_room_id)
+            current_room_exits = player.current_room.get_exits()
+            print('current_room_exits', current_room_exits)
 
 
-        False
+        # False
         # if direction in traversal_path:
         #     break
         # else:
@@ -86,7 +114,7 @@ def recurse():
         #     print('traversal_path:', traversal_path)
         # if current_room_exits == traversal_path:
         #     break
-
+recurse()
 print('traversal_path:', traversal_path)
 
 # TRAVERSAL TEST

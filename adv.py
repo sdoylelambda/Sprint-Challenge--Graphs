@@ -12,10 +12,10 @@ world = World()
 
 # You may uncomment the smaller graphs for development and testing purposes.
 # map_file = "maps/test_line.txt"
-map_file = "maps/test_cross.txt"
+# map_file = "maps/test_cross.txt"
 # map_file = "maps/test_loop.txt"
 # map_file = "maps/test_loop_fork.txt"
-# map_file = "maps/main_maze.txt"
+map_file = "maps/main_maze.txt"
 
 # Loads the map into a dictionary
 room_graph=literal_eval(open(map_file, "r").read())
@@ -84,33 +84,53 @@ world.print_rooms()
 traversal_path = []
 player = Player(world.starting_room)
 print('player:', player)
-current_room_id = player.current_room.id
+current_room_id = player.current_room
 print('current_room_id:', current_room_id)
-exits = player.current_room.get_exits()
-print('exits:', exits)
+
+# print('exits:', exits)
+reverse_directions = {'n': 's', 'e': 'w', 'w': 'e', 's': 'n'}
 
 # print('room', room.id)
 
 def dft_recursive(room, visited=None):
+    # exits = room.get_exits()
     if visited is None:
         visited = set()
+    traversed_path = []
 
-    visited.add(current_room_id)
+    visited.add(room.id)
 
-    for room_exit in exits:
-        if current_room_id not in visited:
-            visited.add(room_exit)
+    # visited_copy = visited.copy()
 
-        if room not in visited:
-            print('starting_vertex:', room)
-            traversal_path.append(room)
-        else:
+    for room_exit in room.get_exits():
+        next_room = room.get_room_in_direction(room_exit)
 
-            for next_room in exits:
-                dft_recursive(next_room, visited)
+        if next_room.id not in visited:
+            next_room_path = dft_recursive(next_room, visited)
+
+            if next_room_path:
+                path = [room_exit] + next_room_path + [reverse_directions[room_exit]]
+            else:
+                path = [room_exit, reverse_directions[room_exit]]
+            traversed_path = traversed_path + path
+
+
+
+
+        # if current_room_id not in visited:
+        #     visited.add(room_exit)
+        #
+        # if room not in visited:
+        #     print('starting_vertex:', room)
+        #     room_copy = traversal_path.copy()
+        #     traversal_path.append(room)
+        # else:
+        #
+        #     for next_room in exits:
+        #         dft_recursive(next_room, visited)
 
     print('traversal_path', traversal_path)
-    return traversal_path
+    return traversed_path
 
 traversal_path = dft_recursive(current_room_id)
 # MY CODE END

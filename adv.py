@@ -1,6 +1,7 @@
 from room import Room
 from player import Player
 from world import World
+from util import Stack, Queue
 
 import random
 from ast import literal_eval
@@ -11,10 +12,10 @@ world = World()
 
 # You may uncomment the smaller graphs for development and testing purposes.
 # map_file = "maps/test_line.txt"
-# map_file = "maps/test_cross.txt"
+map_file = "maps/test_cross.txt"
 # map_file = "maps/test_loop.txt"
 # map_file = "maps/test_loop_fork.txt"
-map_file = "maps/main_maze.txt"
+# map_file = "maps/main_maze.txt"
 
 # Loads the map into a dictionary
 room_graph=literal_eval(open(map_file, "r").read())
@@ -23,15 +24,23 @@ world.load_graph(room_graph)
 # Print an ASCII map
 world.print_rooms()
 
-player = Player(world.starting_room)
+
 
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
-traversal_path = []
+# traversal_path = []
+# player = Player(world.starting_room)
+# print('player:', player)
+# current_room_id = player.current_room.id
+# print('current_room_id:', current_room_id)
+# exits = player.current_room.get_exits()
+# print('exits:', exits)
+# travel = player.travel(direction) - get directions to use
 
 
 # MY CODE START
-# You may find the commands player.current_room.id, player.current_room.get_exits() and player.travel(direction) useful.
+# added - You may find the commands player.current_room.id, player.current_room.get_exits()
+# and player.travel(direction) useful.
 #
 # To solve this path, you'll want to construct your own traversal graph.
 
@@ -72,11 +81,26 @@ traversal_path = []
 # BFS will return the path as a list of room IDs.
 # You will need to convert this to a list of n/s/e/w directions before you can add it to your traversal path.
 
+traversal_path = []
+player = Player(world.starting_room)
+print('player:', player)
+current_room_id = player.current_room.id
+print('current_room_id:', current_room_id)
+exits = player.current_room.get_exits()
+print('exits:', exits)
 
+def dft_recursive(starting_vertex, visited=None):
+    if visited is None:
+        visited = set()
 
+    if starting_vertex not in visited:
+        print('starting_vertex:', starting_vertex)
+        traversal_path.append(starting_vertex)
 
+    for next_room in exits:
+        dft_recursive(next_room, visited)
 
-
+traversal_path = dft_recursive(current_room_id)
 # MY CODE END
 
 

@@ -89,16 +89,28 @@ print('current_room_id:', current_room_id)
 exits = player.current_room.get_exits()
 print('exits:', exits)
 
-def dft_recursive(starting_vertex, visited=None):
+# print('room', room.id)
+
+def dft_recursive(room, visited=None):
     if visited is None:
         visited = set()
 
-    if starting_vertex not in visited:
-        print('starting_vertex:', starting_vertex)
-        traversal_path.append(starting_vertex)
+    visited.add(current_room_id)
 
-    for next_room in exits:
-        dft_recursive(next_room, visited)
+    for room_exit in exits:
+        if current_room_id not in visited:
+            visited.add(room_exit)
+
+        if room not in visited:
+            print('starting_vertex:', room)
+            traversal_path.append(room)
+        else:
+
+            for next_room in exits:
+                dft_recursive(next_room, visited)
+
+    print('traversal_path', traversal_path)
+    return traversal_path
 
 traversal_path = dft_recursive(current_room_id)
 # MY CODE END
